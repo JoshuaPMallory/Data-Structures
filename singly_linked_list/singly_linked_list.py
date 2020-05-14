@@ -17,6 +17,22 @@ class LinkedList:
         self.head = None
         self.tail = None
 
+    def __repr__(self):
+        node    = self.head
+        if node == None:
+            return 'None'
+        stringy = ''
+
+        while node != None:
+            try:
+                next_node = node.next_node.value
+            except AttributeError:
+                next_node = None
+
+            stringy += f'[{node.value} -> {next_node}]\n'
+            node     = node.next_node
+        return stringy.rstrip()
+
     # fill
     def add_to_head(self, value):
         new_node = Node(value)
@@ -51,10 +67,14 @@ class LinkedList:
     def remove_head(self):
         if not self.head:
             return None
+        elif self.head == self.tail:
+            value     = self.head.get_value()
+            self.head = self.head.get_next()
+            self.tail = None
+            return value
         else:
             value     = self.head.get_value()
             self.head = self.head.get_next()
-
             return value
 
     # max
@@ -80,14 +100,3 @@ class LinkedList:
             else:
                 current = current.get_next()
         return False
-
-
-# ll = LinkedList()
-# ll.add_to_tail(3)
-# ll.add_to_tail(5)
-# ll.add_to_tail(9)
-# ll.add_to_tail(11)
-# print(ll.head.get_value())
-# print(ll.remove_head())
-# print(ll.head.get_value())
-
